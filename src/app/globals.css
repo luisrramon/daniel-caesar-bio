@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Color Palette - warm cinematic darkness */
+  --color-bg:        #080705;
+  --color-surface:   #111009;
+  --color-gold:      #C9922A;
+  --color-gold-dim:  #8A6118;
+  --color-cream:     #F2E8D5;
+  --color-muted:     #5A5040;
+  --color-white:     #FAFAF8;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* Spacing */
+  --section-pad: clamp(4rem, 10vw, 10rem);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-cream);
+  font-family: var(--font-display);
+  overflow-x: hidden;
+  cursor: none; /* We'll use a custom cursor */
+}
+
+/* Custom cursor */
+.cursor {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference; /* Makes the cursor visible on all backgrounds */
+  transition: transform 0.15s ease, width 0.2s, height 0.2s;
+}
+
+.cursor.expanded {
+  width: 40px;
+  height: 40px;
+  transform: translate(-14px, -14px); /* Center the expanded cursor */
+}
+
+/* Noise grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.4;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-bg) }
+::-webkit-scrollbar-thumb { background: var(--color-gold-dim); border-radius: 2px; }
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-cream);
+  --font-sans: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a; /* darker background for system dark mode */
+    --foreground: #e9e6df; /* slightly lighter text for contrast */
+  }
+}
